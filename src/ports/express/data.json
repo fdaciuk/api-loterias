@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "loteria": "mega sena",
+      "concurso": "2359",
+      "diaDaSemana": "terça",
+      "data": "06/04/21",
+      "numeros": [
+        "31",
+        "32",
+        "39",
+        "42",
+        "43",
+        "51"
+      ]
+    },
+    {
+      "loteria": "quina",
+      "concurso": "5534",
+      "diaDaSemana": "quarta",
+      "data": "07/04/21",
+      "numeros": [
+        "17",
+        "32",
+        "41",
+        "58",
+        "69"
+      ]
+    },
+    {
+      "loteria": "lotofácil",
+      "concurso": "2200",
+      "diaDaSemana": "quarta",
+      "data": "07/04/21",
+      "numeros": [
+        "01",
+        "02",
+        "04",
+        "06",
+        "08",
+        "09",
+        "10",
+        "11",
+        "13",
+        "14",
+        "16",
+        "17",
+        "19",
+        "23",
+        "25"
+      ]
+    },
+    {
+      "loteria": "lotomania",
+      "concurso": "2167",
+      "diaDaSemana": "terça",
+      "data": "06/04/21",
+      "numeros": [
+        "02",
+        "07",
+        "18",
+        "26",
+        "27",
+        "37",
+        "38",
+        "39",
+        "43",
+        "47",
+        "51",
+        "54",
+        "57",
+        "61",
+        "67",
+        "71",
+        "77",
+        "82",
+        "88",
+        "99"
+      ]
+    },
+    {
+      "loteria": "timemania",
+      "concurso": "1622",
+      "diaDaSemana": "terça",
+      "data": "06/04/21",
+      "numeros": [
+        "15",
+        "25",
+        "33",
+        "38",
+        "48",
+        "63",
+        "74"
+      ]
+    },
+    {
+      "loteria": "dia de sorte",
+      "concurso": "440",
+      "diaDaSemana": "terça",
+      "data": "06/04/21",
+      "numeros": [
+        "02",
+        "08",
+        "13",
+        "14",
+        "17",
+        "21",
+        "24"
+      ]
+    }
+  ]
+}
