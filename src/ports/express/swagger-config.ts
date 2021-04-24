@@ -2,7 +2,7 @@ import swaggerJsDoc, { Options } from 'swagger-jsdoc'
 
 const options: Options = {
   definition: {
-    openapi: '3.0.1',
+    openapi: '3.0.0',
     info: {
       version: '0.1.0',
       title: 'API Loterias',

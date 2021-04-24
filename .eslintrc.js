@@ -26,6 +26,6 @@ module.exports = {
     camelcase: 'off',
     'no-warning-comments': 'warn',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
   },
 }
