@@ -11,13 +11,13 @@ const options: Options = {
 
     servers: [
       {
-        url: 'http://localhost:5000/api/v1',
-        description: 'Local server',
+        url: 'https://brainn-api-loterias.herokuapp.com/api/v1',
+        description: 'Production server',
       },
 
       {
-        url: 'https://brainn-api-loterias.herokuapp.com/api/v1',
-        description: 'Production server',
+        url: 'http://localhost:5000/api/v1',
+        description: 'Local server',
       },
     ],
 
