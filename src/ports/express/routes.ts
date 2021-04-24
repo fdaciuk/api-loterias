@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import json from './data.json'
-import { join } from 'path'
+import { serve, setup } from 'swagger-ui-express'
+import swaggerConfig from './swagger-config'
 
 const app = Router()
 
@@ -19,13 +20,7 @@ function getRandomDate (): string {
   return date.toISOString()
 }
 
-app.get('/', (_req, res) => {
-  res.sendFile(join(process.cwd(), 'README.md'), {
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-  })
-})
+app.use('/docs', serve, setup(swaggerConfig))
 
 app.get('/loterias', (_req, res) => {
   res.json(loterias)
@@ -52,10 +47,6 @@ app.get('/concursos/:id', (req, res) => {
   }
 
   res.json(response)
-})
-
-app.get('*', (_req, res) => {
-  res.redirect('/')
 })
 
 export { app as routes }
