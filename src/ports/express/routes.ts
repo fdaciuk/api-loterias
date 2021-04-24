@@ -37,20 +37,21 @@ routes.get('/concursos', async (_req, res) => {
 
 routes.get('/concursos/:id', async (req, res) => {
   const { id = '' } = req.params
-  try {
-    const concurso = await getConcursoAdapter(id)(db.findOneConcurso)(db.getLoteriaByName)
 
-    pipe(
-      concurso,
-      fold(
-        (reason) => res.status(404).json({ error: true, message: reason }),
-        (result) => res.json(result),
-      ),
-    )
-  } catch (e) {
-    console.log(e)
-    res.json({ error: true, message: e.message })
-  }
+  const concurso = await pipe(
+    id,
+    getConcursoAdapter,
+    (a) => a(db.findOneConcurso),
+    (b) => b(db.getLoteriaByName),
+  )
+
+  pipe(
+    concurso,
+    fold(
+      (reason) => res.status(404).json({ error: true, message: reason }),
+      (result) => res.json(result),
+    ),
+  )
 })
 
 export { routes }
