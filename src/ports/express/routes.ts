@@ -40,7 +40,7 @@ app.get('/concursos/:id', (req, res) => {
   const concurso = json.data.find(data => data.concurso === id)
 
   if (!concurso) {
-    res.status(404).json({ success: false, mesage: 'Concurso não encontrado.' })
+    res.status(404).json({ error: true, message: 'Concurso não encontrado.' })
     return
   }
 
