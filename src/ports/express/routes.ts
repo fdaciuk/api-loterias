@@ -1,52 +1,56 @@
+import { pipe } from 'fp-ts/function'
+import { fold } from 'fp-ts/Either'
 import { Router } from 'express'
-import json from './data.json'
 import { serve, setup } from 'swagger-ui-express'
 import swaggerConfig from './swagger-config'
+import * as db from '@/ports/db-in-memory'
+import { getLoteriasAdapter } from '@/adapters/loterias'
+import { getConcursosAdpter, getConcursoAdapter } from '@/adapters/concursos'
 
-const app = Router()
+const routes = Router()
 
-const loterias = json.data.map((data, index) => ({
-  id: index,
-  nome: data.loteria,
-}))
+routes.use('/docs', serve, setup(swaggerConfig))
 
-const concursos = json.data.map((data) => data.concurso)
+routes.get('/loterias', async (_req, res) => {
+  const loterias = await getLoteriasAdapter(db.getLoterias)
 
-function getRandomDate (): string {
-  const date = new Date()
-  const rand = Math.ceil(Math.random() * 5)
-
-  date.setDate(date.getDate() - rand)
-  return date.toISOString()
-}
-
-app.use('/docs', serve, setup(swaggerConfig))
-
-app.get('/loterias', (_req, res) => {
-  res.json(loterias)
+  pipe(
+    loterias,
+    fold(
+      (reason) => res.status(401).json({ error: true, message: reason }),
+      (result) => res.json(result),
+    ),
+  )
 })
 
-app.get('/concursos', (_req, res) => {
-  res.json(concursos)
+routes.get('/concursos', async (_req, res) => {
+  const concursos = await getConcursosAdpter(db.getConcursos)
+
+  pipe(
+    concursos,
+    fold(
+      (reason) => res.status(401).json({ error: true, message: reason }),
+      (result) => res.json(result),
+    ),
+  )
 })
 
-app.get('/concursos/:id', (req, res) => {
-  const { id } = req.params
-  const concurso = json.data.find(data => data.concurso === id)
+routes.get('/concursos/:id', async (req, res) => {
+  const { id = '' } = req.params
+  try {
+    const concurso = await getConcursoAdapter(id)(db.findOneConcurso)(db.getLoteriaByName)
 
-  if (!concurso) {
-    res.status(404).json({ error: true, message: 'Concurso não encontrado.' })
-    return
+    pipe(
+      concurso,
+      fold(
+        (reason) => res.status(404).json({ error: true, message: reason }),
+        (result) => res.json(result),
+      ),
+    )
+  } catch (e) {
+    console.log(e)
+    res.json({ error: true, message: e.message })
   }
-
-  const response = {
-    id: concurso.concurso,
-    loteria: loterias.find(l => l.nome === concurso.loteria)?.id,
-    numeros: concurso.numeros,
-    data: getRandomDate(),
-  }
-
-  res.json(response)
 })
 
-export { app as routes }
+export { routes }
