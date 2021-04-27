@@ -5,7 +5,14 @@ const loterias = json.data.map((data, index) => ({
   nome: data.loteria,
 }))
 
-const concursosIds = json.data.map((data) => data.concurso)
+const loteriasConcursos = json.data.map((data) => {
+  const loteriaId = loterias.find(l => l.nome === data.loteria)!.id
+
+  return {
+    loteriaId,
+    concursoId: data.concurso,
+  }
+})
 
 export async function getLoterias () {
   return loterias
@@ -22,7 +29,7 @@ export async function getLoteriaByName (loteriaName: string) {
 }
 
 export async function getConcursos () {
-  return concursosIds
+  return loteriasConcursos
 }
 
 export async function findOneConcurso (id: string) {

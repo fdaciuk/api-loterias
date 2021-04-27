@@ -1,7 +1,7 @@
 import { getConcursos, getConcurso } from './concursos'
 import { right, left } from 'fp-ts/Either'
 import { pipe } from 'fp-ts/function'
-import type { Concurso } from '@/core/types/concurso'
+import type { Concurso, LoteriaConcurso } from '@/core/types/concurso'
 
 const concursos: Concurso[] = [
   {
@@ -21,10 +21,20 @@ const concursos: Concurso[] = [
   },
 ]
 
-const concursosIds = concursos.map(c => c.concurso)
+const loteriasConcursos = [
+  {
+    loteriaId: 0,
+    concursoId: '440',
+  },
 
-async function findAllConcursos (): Promise<string[]> {
-  return concursosIds
+  {
+    loteriaId: 1,
+    concursoId: '2359',
+  },
+]
+
+async function findAllConcursos (): Promise<LoteriaConcurso[]> {
+  return loteriasConcursos
 }
 
 async function hasNoConcurso (): Promise<never> {
@@ -42,9 +52,9 @@ async function findOneConcurso (id: string) {
 }
 
 describe('Use cases: Concursos', () => {
-  it('Should return an array of Concursos IDs (Right - Either)', async () => {
+  it('Should return an array of Loterias and Concursos IDs (Right - Either)', async () => {
     const concursos = await getConcursos(findAllConcursos)
-    expect(concursos).toEqual(right(['440', '2359']))
+    expect(concursos).toEqual(right(loteriasConcursos))
   })
 
   it('Should return a Left (Either) when does not have Concursos registered', async () => {

@@ -43,19 +43,19 @@ const options: Options = {
         },
       },
 
-      '/concursos': {
+      '/loterias-concursos': {
         get: {
-          tags: ['Concursos'],
-          summary: 'IDs dos concursos',
-          description: 'Esse endpoint retorna todos os IDs dos concursos',
+          tags: ['Loterias'],
+          summary: 'IDs com relação entre loterias e concursos',
+          description: 'Esse endpoint retorna os dados de relacionamento entre loterias e concursos',
           operationId: 'getConcursos',
           responses: {
             200: {
-              description: 'IDs dos concursos foram retornados',
+              description: 'IDs das loterias e concursos relacionados',
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#components/schemas/Concursos',
+                    $ref: '#components/schemas/LoteriasConcursos',
                   },
                 },
               },
@@ -128,11 +128,20 @@ const options: Options = {
           },
         },
 
-        Concursos: {
+        LoteriasConcursos: {
           type: 'array',
           items: {
-            type: 'string',
-            example: '430',
+            properties: {
+              loteriaId: {
+                type: 'integer',
+                example: 1,
+              },
+
+              concursoId: {
+                type: 'string',
+                example: '440',
+              },
+            },
           },
         },
 

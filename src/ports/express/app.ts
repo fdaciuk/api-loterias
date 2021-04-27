@@ -23,10 +23,6 @@ async function start () {
 
   server.applyMiddleware({ app, path: '/graphql' })
 
-  app.use((_req, res) => {
-    res.status(200).send('Apollo Server started!')
-  })
-
   app.get('*', (_req, res) => {
     res.status(404).send(center(`
       <h1 style="margin: 0;">404</h1>

@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   type Loteria {
-    id: ID
+    id: Int
     nome: String
   }
 
@@ -13,9 +13,14 @@ export const typeDefs = gql`
     data: String
   }
 
+  type LoteriaConcurso {
+    loteriaId: Int
+    concursoId: ID
+  }
+
   type Query {
     loterias: [Loteria]
-    concursos: [ID]
+    loteriasConcursos: [LoteriaConcurso]
     concurso (id: ID!): Concurso
   }
 `

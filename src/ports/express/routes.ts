@@ -23,7 +23,7 @@ routes.get('/loterias', async (_req, res) => {
   )
 })
 
-routes.get('/concursos', async (_req, res) => {
+routes.get('/loterias-concursos', async (_req, res) => {
   const concursos = await getConcursosAdpter(db.getConcursos)
 
   pipe(

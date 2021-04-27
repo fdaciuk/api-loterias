@@ -16,19 +16,19 @@ export const resolvers = {
       return pipe(
         loterias,
         fold(
-          (reason) => { throw reason },
+          (reason) => { throw new Error(`${reason}`) },
           identity,
         ),
       )
     },
 
-    async concursos () {
+    async loteriasConcursos () {
       const concursos = await getConcursosAdpter(db.getConcursos)
 
       return pipe(
         concursos,
         fold(
-          (reason) => { throw reason },
+          (reason) => { throw new Error(`${reason}`) },
           identity,
         ),
       )
@@ -45,7 +45,7 @@ export const resolvers = {
       return pipe(
         concurso,
         fold(
-          (reason) => { throw reason },
+          (reason) => { throw new Error(`${reason}`) },
           (result) => result,
         ),
       )
