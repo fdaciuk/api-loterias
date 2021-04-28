@@ -1,5 +1,6 @@
 import { pipe, identity } from 'fp-ts/function'
 import { fold } from 'fp-ts/Either'
+import { IResolvers } from 'graphql-tools'
 import * as db from '@/ports/db-in-memory'
 import { getLoteriasAdapter } from '@/adapters/loterias'
 import { getConcursosAdpter, getConcursoAdapter } from '@/adapters/concursos'
@@ -8,7 +9,7 @@ type ConcursoInput = {
   id: string
 }
 
-export const resolvers = {
+export const resolvers: IResolvers = {
   Query: {
     async loterias () {
       const loterias = await getLoteriasAdapter(db.getLoterias)
@@ -34,7 +35,7 @@ export const resolvers = {
       )
     },
 
-    async concurso (_: unknown, { id }: ConcursoInput) {
+    async concurso (_, { id }: ConcursoInput) {
       const concurso = await pipe(
         id,
         getConcursoAdapter,
