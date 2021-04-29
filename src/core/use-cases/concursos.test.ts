@@ -41,7 +41,7 @@ async function hasNoConcurso (): Promise<never> {
   throw new Error('Nenhum concurso encontrado')
 }
 
-async function findOneConcurso (id: string) {
+async function findOneConcurso (id: string): Promise<Concurso | never> {
   const concurso = concursos.find(c => c.concurso === id)
 
   if (!concurso) {
@@ -59,7 +59,7 @@ describe('Use cases: Concursos', () => {
 
   it('Should return a Left (Either) when does not have Concursos registered', async () => {
     const concursos = await getConcursos(hasNoConcurso)
-    expect(concursos).toEqual(left('Nenhum concurso encontrado'))
+    expect(concursos).toEqual(left(new Error('Nenhum concurso encontrado')))
   })
 
   it('Should return a Concurso (Right - Either)', async () => {
@@ -77,6 +77,6 @@ describe('Use cases: Concursos', () => {
       getConcurso('1'),
     )
 
-    expect(concurso).toEqual(left('Concurso não encontrado'))
+    expect(concurso).toEqual(left(new Error('Concurso não encontrado')))
   })
 })

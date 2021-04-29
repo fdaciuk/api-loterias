@@ -17,7 +17,10 @@ routes.get('/loterias', async (_req, res) => {
   pipe(
     loterias,
     fold(
-      (reason) => res.status(401).json({ error: true, message: reason }),
+      (reason) => {
+        const message = reason instanceof Error ? reason.message : reason
+        res.status(401).json({ error: true, message: `${message}` })
+      },
       (result) => res.json(result),
     ),
   )
@@ -29,7 +32,10 @@ routes.get('/loterias-concursos', async (_req, res) => {
   pipe(
     concursos,
     fold(
-      (reason) => res.status(401).json({ error: true, message: reason }),
+      (reason) => {
+        const message = reason instanceof Error ? reason.message : reason
+        res.status(401).json({ error: true, message: `${message}` })
+      },
       (result) => res.json(result),
     ),
   )
@@ -48,7 +54,10 @@ routes.get('/concursos/:id', async (req, res) => {
   pipe(
     concurso,
     fold(
-      (reason) => res.status(404).json({ error: true, message: reason }),
+      (reason) => {
+        const message = reason instanceof Error ? reason.message : reason
+        res.status(404).json({ error: true, message: `${message}` })
+      },
       (result) => res.json(result),
     ),
   )

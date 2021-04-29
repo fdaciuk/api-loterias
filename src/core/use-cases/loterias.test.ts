@@ -30,6 +30,6 @@ describe('Use cases: Loterias', () => {
 
   it('Should return a Left (Either) when does not have Loterias registered', async () => {
     const loterias = await getLoterias(hasNoLoterias)
-    expect(loterias).toEqual(left('Nenhuma loteria encontrada'))
+    expect(loterias).toEqual(left(new Error('Nenhuma loteria encontrada')))
   })
 })

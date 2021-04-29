@@ -1,8 +1,8 @@
-import { pipe } from 'fp-ts/function'
+import { pipe, identity } from 'fp-ts/function'
+import { tryCatch } from 'fp-ts/TaskEither'
 import { Either, isLeft, right } from 'fp-ts/Either'
 import type { Loteria } from '@/core/types/loteria'
 import * as usecaseConcursos from '@/core/use-cases/concursos'
-import { to } from '@/core/utils'
 
 type ConcursoNormalized = {
   id: string
@@ -13,10 +13,10 @@ type ConcursoNormalized = {
 
 type GetLoteriaByName = (loteria: string) => Promise<Loteria>
 
-type GetConcursoAdapter = (id: string) =>
+type GetConcursoAdapter<E = unknown> = (id: string) =>
   (f: usecaseConcursos.FindOneConcurso) =>
   (f2: GetLoteriaByName) =>
-  Promise<Either<Error, ConcursoNormalized>>
+  Promise<Either<E, ConcursoNormalized>>
 
 export const getConcursosAdpter: usecaseConcursos.GetConcursos = (findAllConcursos) => {
   return usecaseConcursos.getConcursos(findAllConcursos)
@@ -33,7 +33,10 @@ export const getConcursoAdapter: GetConcursoAdapter = (id) => (findOneConcurso) 
   }
 
   const concurso = result.right
-  const loteria = await to(getLoteriaByName(concurso.loteria))
+  const loteria = await tryCatch(
+    () => getLoteriaByName(concurso.loteria),
+    identity,
+  )()
 
   if (isLeft(loteria)) {
     return loteria

@@ -16,10 +16,7 @@ export const resolvers: IResolvers = {
 
       return pipe(
         loterias,
-        fold(
-          (reason) => { throw new Error(`${reason}`) },
-          identity,
-        ),
+        fold(identity, identity),
       )
     },
 
@@ -28,10 +25,7 @@ export const resolvers: IResolvers = {
 
       return pipe(
         concursos,
-        fold(
-          (reason) => { throw new Error(`${reason}`) },
-          identity,
-        ),
+        fold(identity, identity),
       )
     },
 
@@ -45,10 +39,7 @@ export const resolvers: IResolvers = {
 
       return pipe(
         concurso,
-        fold(
-          (reason) => { throw new Error(`${reason}`) },
-          (result) => result,
-        ),
+        fold(identity, identity),
       )
     },
   },
