@@ -13,7 +13,7 @@
     "test:integration": "jest --passWithNoTests --config jest.config.integration.js",
     "test:integration:watch": " yarn test:integration --watch",
     "lint": "eslint . --ext js,ts",
-    "lint:fix": "eslint --fix . --ext js,ts",
+    "lint:fix": "yarn lint --fix",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
     "prepare": "husky install",
     "build": "tsc"

@@ -1,4 +1,5 @@
 import { pipe } from 'fp-ts/function'
+import { ap } from 'fp-ts/Identity'
 import { fold } from 'fp-ts/Either'
 import { Router } from 'express'
 import { serve, setup } from 'swagger-ui-express'
@@ -47,8 +48,8 @@ routes.get('/concursos/:id', async (req, res) => {
   const concurso = await pipe(
     id,
     getConcursoAdapter,
-    (a) => a(db.findOneConcurso),
-    (b) => b(db.getLoteriaByName),
+    ap(db.findOneConcurso),
+    ap(db.getLoteriaByName),
   )
 
   pipe(

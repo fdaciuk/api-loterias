@@ -1,4 +1,5 @@
 import { pipe, identity } from 'fp-ts/function'
+import { ap } from 'fp-ts/Identity'
 import { fold } from 'fp-ts/Either'
 import { IResolvers } from 'graphql-tools'
 import * as db from '@/ports/db-in-memory'
@@ -33,8 +34,8 @@ export const resolvers: IResolvers = {
       const concurso = await pipe(
         id,
         getConcursoAdapter,
-        (a) => a(db.findOneConcurso),
-        (b) => b(db.getLoteriaByName),
+        ap(db.findOneConcurso),
+        ap(db.getLoteriaByName),
       )
 
       return pipe(
